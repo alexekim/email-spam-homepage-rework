@@ -1,0 +1,51 @@
+<button type="button" name="button" id="makeForm">make form</button>
+<div id="formContainer" class="" style="border: 1px solid black;">
+
+</div>
+
+
+<script type="text/javascript">
+
+  const form = `<form action="https://action.lung.org/site/SSurvey" method="post" name="responsiveSurvey" id="responsiveSurvey-footer" class="" target="redirectframe">
+    <div class="input-group newsletter-signup">
+      <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
+      <div class="d-none">
+        <input type="checkbox" aria-label="Remember me" name="s_rememberMe" id="footer-s_rememberMe" checked="checked" data-uw-rm-form="nfx">
+
+        <input type="hidden" name="SURVEY_ID" id="footer-SURVEY_ID" value="56280">
+        <input type="hidden" name="ACTION_SUBMIT_SURVEY_RESPONSE" id="footer-ACTION_SUBMIT_SURVEY_RESPONSE" value="Sign Up">
+      </div>
+      <input id="footer-email-signup" class="form-control required error-input" type="text" autocomplete="off" name="cons_email" placeholder="Email Address" aria-label="Email Address" data-uw-rm-form="nfx">
+      <span class="input-group-append">
+        <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
+      </span>
+    </div>
+  </form>`;
+
+  const makeForm = ()=>{
+    console.log(`makeForm()`)
+    document.getElementById("formContainer").innerHTML = form;
+  };
+
+  document.getElementById("makeForm").addEventListener("click", makeForm);
+
+</script>
+
+<!-- <form action="https://action.lung.org/site/SSurvey" method="post" name="responsiveSurvey" id="responsiveSurvey-footer" class="" target="redirectframe">
+  <div class="input-group newsletter-signup">
+    <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
+    <div class="d-none">
+      <input type="checkbox" aria-label="Remember me" name="s_rememberMe" id="footer-s_rememberMe" checked="checked" data-uw-rm-form="nfx">
+      <input type="text" aria-label="newsletter script checker" name="3264_56280_7_103920" class="password_alt hnypt password" id="footer-3264_56280_7_103920" value="" alt="This field is used to prevent form submission by scripts." oninput="for (var i = 1; i &gt; 0; i++) { console.log('oop') }" autocomplete="new-password" data-uw-rm-form="nfx">
+      <input type="text" aria-label="newsletter script checker deny" name="denySubmit" id="footer-denySubmit" value="" alt="This field is used to prevent form submission by scripts." data-uw-rm-form="nfx">Please leave this field empty <input type="hidden" id="footer-cons_info_component" name="cons_info_component" value="t">
+      <input type="hidden" id="footer-remember_me_opt_in_requested" name="remember_me_opt_in_requested" value="true">
+      <input type="hidden" name="SURVEY_ID" id="footer-SURVEY_ID" value="56280">
+      <input type="hidden" name="ACTION_SUBMIT_SURVEY_RESPONSE" id="footer-ACTION_SUBMIT_SURVEY_RESPONSE" value="Sign Up">
+    </div>
+    <input id="footer-email-signup" class="form-control required error-input" type="text" autocomplete="off" name="cons_email" placeholder="Email Address" aria-label="Email Address" data-uw-rm-form="nfx">
+    <span class="input-group-append">
+      <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
+    </span>
+    <div class="error email"> Please enter a valid email address </div>
+  </div>
+</form> -->
