@@ -1,0 +1,79 @@
+_NewsletterFields.cshtml
+
+@model string
+
+<div class="d-none">
+    <input type="checkbox" aria-label="Remember me" name="s_rememberMe" id="@Model-s_rememberMe" checked="checked">
+    <input type="text" aria-label="newsletter script checker" name="3264_56280_7_103920" class="password_alt hnypt password" id="@Model-3264_56280_7_103920" value="" alt="This field is used to prevent form submission by scripts." oninput="for (var i = 1; i > 0; i++) { console.warn('oop') }" autocomplete="new-password">
+    <input type="text" aria-label="newsletter script checker deny" name="denySubmit" id="@Model-denySubmit" value="" alt="This field is used to prevent form submission by scripts.">Please leave this field empty
+
+    <input type="hidden" id="@Model-cons_info_component" name="cons_info_component" value="t">
+    <input type="hidden" id="@Model-remember_me_opt_in_requested" name="remember_me_opt_in_requested" value="true">
+    @*<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">*@
+    <div id="surveyIDInput"></div>
+
+    <input type="hidden" name="ACTION_SUBMIT_SURVEY_RESPONSE" id="@Model-ACTION_SUBMIT_SURVEY_RESPONSE" value="Sign Up">
+</div>
+<input id="@Model-email-signup" class="form-control required" type="text" autocomplete="off" name="cons_email" placeholder="Email Address" aria-label="Email Address" />
+
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+        console.warn("DOMCONTENTLOADED!");
+
+        document.querySelector("#footer-email-signup").addEventListener("input", ()=>{
+        if(document.querySelector("#surveyIDInput").innerHTML == "") {
+            document.querySelector("#surveyIDInput").innerHTML = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+            console.warn(`triggered on input over email input`);
+        } else{
+            console.warn(`not empty`);
+        }
+    });
+
+    document.querySelector("#footer-email-signup").addEventListener("click", ()=>{
+        if(document.querySelector("#surveyIDInput").innerHTML == "") {
+            document.querySelector("#surveyIDInput").innerHTML = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+            console.warn(`triggered on click over email input`);
+        } else{
+            console.warn(`not empty`);
+        }
+    });
+
+    document.querySelector("#footer-email-signup").addEventListener("focus", ()=>{
+        if(document.querySelector("#surveyIDInput").innerHTML == "") {
+            document.querySelector("#surveyIDInput").innerHTML = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+            console.warn(`triggered on focus over email input`);
+        } else{
+            console.warn(`not empty`);
+        }
+    });
+
+    document.querySelector("#footer-email-signup").addEventListener("hover", ()=>{
+        if(document.querySelector("#surveyIDInput").innerHTML == "") {
+            document.querySelector("#surveyIDInput").innerHTML = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+            console.warn(`triggered on hover over email input`);
+        } else{
+            console.warn(`not empty`);
+        }
+    });
+
+    document.querySelector("#newsletter-before").addEventListener("click", ()=>{
+        if(document.querySelector("#surveyIDInput").innerHTML == "") {
+            document.querySelector("#surveyIDInput").innerHTML = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+            console.warn(`triggered on click over parent div`);
+        } else{
+            console.warn(`not empty`);
+        }
+    });
+
+    document.querySelector("#newsletter-before").addEventListener("hover", ()=>{
+        if(document.querySelector("#surveyIDInput").innerHTML == "") {
+            document.querySelector("#surveyIDInput").innerHTML = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+            console.warn(`triggered on hover over parent div`);
+        } else{
+            console.warn(`not empty`);
+        }
+    });
+
+    });
+
+</script>
