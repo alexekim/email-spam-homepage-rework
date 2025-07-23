@@ -1,15 +1,15 @@
 <!-- parent div here is <div class="card-summary"> -->
 <p>Join over 700,000 people who receive the latest news about lung health, including research, lung disease, air quality, quitting tobacco, inspiring stories and more!</p>
-<div id="formContainer" class="">
+<!-- <div id="" class=""> -->
   <style media="screen">
-    #cloakEmailSection{
+    #cloakEmailSectionLightbox{
       display: flex;
     }
     .cloakElement{
       /*flex: 1*/
       display: inline;
     }
-    #cloakEmail {
+    #cloakEmailLightbox {
       border: 2px solid #D9D9D9;
       border-radius: 4px;
       background: #f6f6f6;
@@ -19,7 +19,7 @@
       width: 71%;
       font-family: "Aeonik", Arial, sans-serif;
     }
-    #cloakSubmit{
+    #cloakSubmitLightbox{
       padding: 0 18px 0 18px;
     }
     /* @media(max-width:1134px){
@@ -48,17 +48,17 @@
     } */
 
     @media(max-width:767px) {
-        #cloakEmailSection{
+        #cloakEmailSectionLightbox{
             display: block;
         }
         .cloakElement{
             display: block;
             width: 100%;
         }
-        #cloakEmail {
+        #cloakEmailLightbox {
             width: 100%;
         }
-        #cloakSubmit{
+        #cloakSubmitLightbox{
             margin-top: 20px;
             padding: 12px
         }
@@ -70,93 +70,249 @@
 
 
   </style>
-  <div id="cloakEmailSection" >
-      <div tabindex="0" aria-label="Get updates by sigining up for our newsletter" id="cloakEmail" class="cloakElement">
+  <div id="cloakEmailSectionLightbox" >
+      <div aria-label="Get updates by sigining up for our newsletter" id="cloakEmailLightbox" class="cloakElement">
           Email Address
       </div>
-      <button id="cloakSubmit" class="cloakElement" aria-label="Get updates by sigining up for our newsletter" >
+      <button tabindex="0" id="cloakSubmitLightbox" class="cloakElement" aria-label="Get updates by sigining up for our newsletter" >
           GET UPDATES
       </button>
   </div>
-</div>
-<form action="https://action.lung.org/site/SSurvey" id="responsiveSurvey-modal" method="post" name="responsiveSurvey" target="redirectframe">
-  <div class="input-group newsletter-signup">
-    <label class="sr-only" for="email-signup-popup">Sign Up For Newsletter</label>
-    <div class="d-none">
-      <input aria-label="Remember me" checked="checked" id="@Model-s_rememberMe" name="s_rememberMe" type="checkbox" />
-      <input alt="This field is used to prevent form submission by scripts." aria-label="newsletter script checker" autocomplete="new-password" class="password_alt hnypt password" id="@Model-3264_56280_7_103920" name="3264_56280_7_103920" oninput="for (var i = 1; i &gt; 0; i++) { console.log('oop') }" type="text" value="" />
-      <input alt="This field is used to prevent form submission by scripts." aria-label="newsletter script checker deny" id="@Model-denySubmit" name="denySubmit" type="text" value="" />Please leave this field empty <input id="@Model-cons_info_component" name="cons_info_component" type="hidden" value="t" />
-      <input id="@Model-remember_me_opt_in_requested" name="remember_me_opt_in_requested" type="hidden" value="true" />
-      <input id="@Model-SURVEY_ID" name="SURVEY_ID" type="hidden" value="56280" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_1" name="3264_56280_6_103921" type="checkbox" value="4304" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_2" name="3264_56280_6_103921" type="checkbox" value="4307" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_3" name="3264_56280_6_103921" type="checkbox" value="4306" />
-      <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_4" name="3264_56280_6_103921" type="checkbox" value="4320" />
-      <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_5" name="3264_56280_6_103921" type="checkbox" value="4301" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_6" name="3264_56280_6_103921" type="checkbox" value="4317" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_7" name="3264_56280_6_103921" type="checkbox" value="4310" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_8" name="3264_56280_6_103921" type="checkbox" value="4311" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_9" name="3264_56280_6_103921" type="checkbox" value="4308" />
-      <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_10" name="3264_56280_6_103921" type="checkbox" value="4305" />
-      <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_11" name="3264_56280_6_103921" type="checkbox" value="4281" />
-      <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_12" name="3264_56280_6_103921" type="checkbox" value="4302" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_13" name="3264_56280_6_103921" type="checkbox" value="4314" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_14" name="3264_56280_6_103921" type="checkbox" value="4309" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_15" name="3264_56280_6_103921" type="checkbox" value="4312" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_16" name="3264_56280_6_103921" type="checkbox" value="4315" />
-      <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_17" name="3264_56280_6_103921" type="checkbox" value="4316" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_18" name="3264_56280_6_103921" type="checkbox" value="4313" />
-      <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_19" name="3264_56280_6_103921" type="checkbox" value="4322" />
-      <input id="@Model-ACTION_SUBMIT_SURVEY_RESPONSE" name="ACTION_SUBMIT_SURVEY_RESPONSE" type="hidden" value="Sign Up" />
-    </div>
-    <input aria-label="Email Address" autocomplete="off" class="form-control required" id="@Model-email-signup" name="cons_email" placeholder="Email Address" type="text" />
-    <span class="input-group-append">
-      <button class="g-recaptcha btn btn-primary btn-submit" data-action="submit" data-callback="onSubmit" data-sitekey="6LfMuX8rAAAAAOX-Goq7uGhHaG5fKVHlraaIdxOm">GET UPDATES</button>
-    </span>
-    <div class="error email hidden">Please enter a valid email address</div>
-  </div>
-</form>
+<!-- </div> -->
+<div id="formContainerLightbox" class="">
 
+</div>
 <script type="text/javascript">
   console.log("TRIGGER 1");
-  // const formContainer = document.querySelector("#formContainer");
-  // const formString = `<form action="https://action.lung.org/site/SSurvey" id="responsiveSurvey-modal" method="post" name="responsiveSurvey" target="redirectframe">
-  //   <div class="input-group newsletter-signup">
-  //     <label class="sr-only" for="email-signup-popup">Sign Up For Newsletter</label>
-  //     <div class="d-none">
-  //       <input aria-label="Remember me" checked="checked" id="@Model-s_rememberMe" name="s_rememberMe" type="checkbox" />
-  //       <input alt="This field is used to prevent form submission by scripts." aria-label="newsletter script checker" autocomplete="new-password" class="password_alt hnypt password" id="@Model-3264_56280_7_103920" name="3264_56280_7_103920" oninput="for (var i = 1; i &gt; 0; i++) { console.log('oop') }" type="text" value="" />
-  //       <input alt="This field is used to prevent form submission by scripts." aria-label="newsletter script checker deny" id="@Model-denySubmit" name="denySubmit" type="text" value="" />Please leave this field empty <input id="@Model-cons_info_component" name="cons_info_component" type="hidden" value="t" />
-  //       <input id="@Model-remember_me_opt_in_requested" name="remember_me_opt_in_requested" type="hidden" value="true" />
-  //       <input id="@Model-SURVEY_ID" name="SURVEY_ID" type="hidden" value="56280" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_1" name="3264_56280_6_103921" type="checkbox" value="4304" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_2" name="3264_56280_6_103921" type="checkbox" value="4307" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_3" name="3264_56280_6_103921" type="checkbox" value="4306" />
-  //       <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_4" name="3264_56280_6_103921" type="checkbox" value="4320" />
-  //       <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_5" name="3264_56280_6_103921" type="checkbox" value="4301" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_6" name="3264_56280_6_103921" type="checkbox" value="4317" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_7" name="3264_56280_6_103921" type="checkbox" value="4310" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_8" name="3264_56280_6_103921" type="checkbox" value="4311" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_9" name="3264_56280_6_103921" type="checkbox" value="4308" />
-  //       <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_10" name="3264_56280_6_103921" type="checkbox" value="4305" />
-  //       <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_11" name="3264_56280_6_103921" type="checkbox" value="4281" />
-  //       <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_12" name="3264_56280_6_103921" type="checkbox" value="4302" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_13" name="3264_56280_6_103921" type="checkbox" value="4314" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_14" name="3264_56280_6_103921" type="checkbox" value="4309" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_15" name="3264_56280_6_103921" type="checkbox" value="4312" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_16" name="3264_56280_6_103921" type="checkbox" value="4315" />
-  //       <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_17" name="3264_56280_6_103921" type="checkbox" value="4316" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_18" name="3264_56280_6_103921" type="checkbox" value="4313" />
-  //       <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_19" name="3264_56280_6_103921" type="checkbox" value="4322" />
-  //       <input id="@Model-ACTION_SUBMIT_SURVEY_RESPONSE" name="ACTION_SUBMIT_SURVEY_RESPONSE" type="hidden" value="Sign Up" />
-  //     </div>
-  //     <input aria-label="Email Address" autocomplete="off" class="form-control required" id="@Model-email-signup" name="cons_email" placeholder="Email Address" type="text" />
-  //     <span class="input-group-append">
-  //       <button class="g-recaptcha btn btn-primary btn-submit" data-action="submit" data-callback="onSubmit" data-sitekey="6LfMuX8rAAAAAOX-Goq7uGhHaG5fKVHlraaIdxOm">GET UPDATES</button>
-  //     </span>
-  //     <div class="error email hidden">Please enter a valid email address</div>
-  //   </div>
-  // </form>`;
+  const formContainerLightbox = document.querySelector("#formContainerLightbox");
+  const formString = `<form action="https://action.lung.org/site/SSurvey" id="responsiveSurvey-modalLightbox" method="post" name="responsiveSurvey" target="redirectframe">
+    <div class="input-group newsletter-signup">
+      <label class="sr-only" for="email-signup-popup">Sign Up For Newsletter</label>
+      <div class="d-none">
+        <input aria-label="Remember me" checked="checked" id="@Model-s_rememberMe" name="s_rememberMe" type="checkbox" />
+        <input alt="This field is used to prevent form submission by scripts." aria-label="newsletter script checker" autocomplete="new-password" class="password_alt hnypt password" id="@Model-3264_56280_7_103920" name="3264_56280_7_103920" oninput="for (var i = 1; i &gt; 0; i++) { console.log('oop') }" type="text" value="" />
+        <input alt="This field is used to prevent form submission by scripts." aria-label="newsletter script checker deny" id="@Model-denySubmit" name="denySubmit" type="text" value="" />Please leave this field empty <input id="@Model-cons_info_component" name="cons_info_component" type="hidden" value="t" />
+        <input id="@Model-remember_me_opt_in_requested" name="remember_me_opt_in_requested" type="hidden" value="true" />
+        <input id="@Model-SURVEY_ID" name="SURVEY_ID" type="hidden" value="56280" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_1" name="3264_56280_6_103921" type="checkbox" value="4304" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_2" name="3264_56280_6_103921" type="checkbox" value="4307" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_3" name="3264_56280_6_103921" type="checkbox" value="4306" />
+        <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_4" name="3264_56280_6_103921" type="checkbox" value="4320" />
+        <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_5" name="3264_56280_6_103921" type="checkbox" value="4301" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_6" name="3264_56280_6_103921" type="checkbox" value="4317" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_7" name="3264_56280_6_103921" type="checkbox" value="4310" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_8" name="3264_56280_6_103921" type="checkbox" value="4311" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_9" name="3264_56280_6_103921" type="checkbox" value="4308" />
+        <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_10" name="3264_56280_6_103921" type="checkbox" value="4305" />
+        <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_11" name="3264_56280_6_103921" type="checkbox" value="4281" />
+        <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_12" name="3264_56280_6_103921" type="checkbox" value="4302" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_13" name="3264_56280_6_103921" type="checkbox" value="4314" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_14" name="3264_56280_6_103921" type="checkbox" value="4309" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_15" name="3264_56280_6_103921" type="checkbox" value="4312" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_16" name="3264_56280_6_103921" type="checkbox" value="4315" />
+        <input aria-label="newsletter interest id" checked="checked" class="checkbox" id="@Model-3264_56280_6_103921_17" name="3264_56280_6_103921" type="checkbox" value="4316" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_18" name="3264_56280_6_103921" type="checkbox" value="4313" />
+        <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_19" name="3264_56280_6_103921" type="checkbox" value="4322" />
+        <input id="@Model-ACTION_SUBMIT_SURVEY_RESPONSE" name="ACTION_SUBMIT_SURVEY_RESPONSE" type="hidden" value="Sign Up" />
+      </div>
+      <input tabindex="0" aria-label="Email Address" autocomplete="off" class="form-control required" id="@Model-email-signup" name="cons_email" placeholder="Email Address" type="text" />
+      <span class="input-group-append">
+        <button class="g-recaptcha btn btn-primary btn-submit" data-action="submit" data-callback="onSubmit" data-sitekey="6LfMuX8rAAAAAOX-Goq7uGhHaG5fKVHlraaIdxOm">GET UPDATES</button>
+      </span>
+      <div class="error email hidden">Please enter a valid email address</div>
+    </div>
+  </form>`;
 
+  document.querySelector("#cloakEmailLightbox").addEventListener("click", ()=>{
+    document.querySelector("#cloakEmailSectionLightbox").remove();
+    formContainerLightbox.innerHTML = formString;
+    document.querySelector("#formContainerLightbox").click();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
+    if(document.querySelector("#responsiveSurvey-modalLightbox")){
+      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+      })
+    }
+    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+    });
+  });
 
+  document.querySelector("#cloakSubmitLightbox").addEventListener("hover", function(){
+    document.querySelector("#cloakEmailSectionLightbox").remove();
+    formContainerLightbox.innerHTML = formString;
+    document.querySelector("#formContainerLightbox").click();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
+    if(document.querySelector("#responsiveSurvey-modalLightbox")){
+      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+      })
+    }
+    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+    });
+  });
+  document.querySelector("#cloakSubmitLightbox").addEventListener("focus", function(){
+    document.querySelector("#cloakEmailSectionLightbox").remove();
+    formContainerLightbox.innerHTML = formString;
+    document.querySelector("#formContainerLightbox").click();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
+    if(document.querySelector("#responsiveSurvey-modalLightbox")){
+      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+      })
+    }
+    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+    });
+  });
+  document.querySelector("#cloakSubmitLightbox").addEventListener("click", function(){
+    document.querySelector("#cloakEmailSectionLightbox").remove();
+    formContainerLightbox.innerHTML = formString;
+    document.querySelector("#formContainerLightbox").click();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
+    if(document.querySelector("#responsiveSurvey-modalLightbox")){
+      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+      })
+    }
+    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+    });
+  });
+  document.querySelector("#cloakEmailLightbox").addEventListener("hover", function(){
+    document.querySelector("#cloakEmailSectionLightbox").remove();
+    formContainerLightbox.innerHTML = formString;
+    document.querySelector("#formContainerLightbox").click();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
+    if(document.querySelector("#responsiveSurvey-modalLightbox")){
+      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+      })
+    }
+    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+    });
+  });
+  document.querySelector("#cloakEmailLightbox").addEventListener("focus", function(){
+    document.querySelector("#cloakEmailSectionLightbox").remove();
+    formContainerLightbox.innerHTML = formString;
+    document.querySelector("#formContainerLightbox").click();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
+    if(document.querySelector("#responsiveSurvey-modalLightbox")){
+      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+      })
+    }
+    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+    });
+  });
+  document.querySelector("#cloakEmailLightbox").addEventListener("click", function(){
+    document.querySelector("#cloakEmailSectionLightbox").remove(); // if this throws an error,
+    formContainerLightbox.innerHTML = formString;
+    document.querySelector("#formContainerLightbox").click();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
+    if(document.querySelector("#responsiveSurvey-modalLightbox")){
+      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+      })
+    }
+    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+    });
+  });
+
+  document.addEventListener("keyup",(e)=>{
+    if(e.keyCode == 9 && document.querySelector("#cloakEmailSectionLightbox")){
+      console.log("tab pressed");
+      document.querySelector("#cloakEmailSectionLightbox").remove();
+      formContainerLightbox.innerHTML = formString;
+      document.querySelector("#formContainerLightbox").click();
+      document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+      document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
+      document.querySelector("#formContainerLightbox input[name='cons_email']").click();
+      if(document.querySelector("#responsiveSurvey-modalLightbox")){
+        document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
+          document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+          document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+        })
+      }
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      // check for change
+      $("#responsiveSurvey-modalLightbox").on("submit",function(){
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+      });
+    }
+  });
 </script>

@@ -1,0 +1,305 @@
+@model BaseViewModel
+
+<section data-ktc-search-exclude class="section section-signup bg-white">
+    <div class="global-container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="section-signup-donate">
+                    <h2 class="h4">Make a Donation</h2>
+                    <p class="">
+                        Your tax-deductible donation funds lung disease and lung cancer research, new treatments, lung health education, and more.
+                    </p>
+                    <a id="signUpDonateBtn" href="/donate" class="btn secondary-btn homeDonateBtn">Make a Donation</a>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="section-signup-email">
+                    @if (Model.IsLoggedIn)
+                    {
+                        <h2 class="h4">Get Involved</h2>
+                        <p>We need your help! Participate in an event, become a volunteer, advocate for laws, share your story or make a donation.</p>
+                        <a href="/get-involved" class="btn btn-primary getInvolvedBtn">GET UPDATES</a>
+                    }
+                    else
+                    {
+                        <div class="js-newsletter-form">
+                            <h2 class="h4">Become a Lung Health Insider</h2>
+                            <p class="">Join over 700,000 people who receive the latest news about lung health, including research, lung disease, air quality, quitting tobacco, inspiring stories and more!</p>
+                            <div id="newsletter-before" class="newsletter-before">
+                                <!--phase 1 spam fix-->
+                                <style>
+                                    /*                                    @@media(min-width:767px) {
+                                        #cloakEmailSection {
+                                            display: block;
+                                        }
+
+                                        .cloakElement {
+                                            display: block;
+                                            width: 100%;
+                                        }
+
+                                        #cloakEmail {
+                                            width: 100%;
+                                        }
+
+                                        #cloakSubmit {
+                                            margin-top: 20px;
+                                        }
+                                    }
+
+                                    @@media(min-width:768px) {
+                                        #cloakEmailSection {
+                                            display: inline-block;
+                                        }
+
+                                        .cloakElement {
+                                            display: inline-block;
+                                        }
+
+                                        #cloakEmail {
+                                            width: 55%;
+                                        }
+
+                                        #cloakSubmit {
+                                            display: inline-block;
+                                        }
+                                    }*/
+                                    #cloakEmailSection {
+                                        display: flex;
+                                    }
+
+                                    .cloakElement {
+                                        /*flex: 1*/
+                                        display: inline;
+                                    }
+
+                                    #cloakEmail {
+                                        border: 2px solid #D9D9D9;
+                                        border-radius: 4px;
+                                        background: #f6f6f6;
+                                        color: #8d8d8d;
+                                        padding: 13px;
+                                        margin-right: -23px;
+                                        width: 71%;
+                                        font-family: "Aeonik", Arial, sans-serif;
+                                    }
+
+                                    @@media(max-width:1199px) {
+                                        #cloakEmail {
+                                            width: 64%;
+                                        }
+                                    }
+
+                                    @@media(max-width:880px) {
+                                        #cloakEmail {
+                                            width: 63%;
+                                        }
+                                    }
+
+                                    @@media(max-width:860px) {
+                                        #cloakEmail {
+                                            width: 62%;
+                                        }
+                                    }
+
+                                    @@media(max-width:841px) {
+                                        #cloakEmail {
+                                            width: 60%;
+                                        }
+                                    }
+
+                                    @@media(max-width:805px) {
+                                        #cloakEmail {
+                                            width: 55%;
+                                        }
+                                    }
+
+                                    @@media(max-width:767px) {
+                                        #cloakEmailSection {
+                                            display: block;
+                                        }
+
+                                        .cloakElement {
+                                            display: block;
+                                            width: 100%;
+                                        }
+
+                                        #cloakEmail {
+                                            width: 100%;
+                                        }
+
+                                        #cloakSubmit {
+                                            margin-top: 20px;
+                                        }
+                                    }
+
+                                    #responsiveSurvey-footer {
+                                        display: none;
+                                    }
+                                </style>
+                                <div id="cloakEmailSection">
+                                    <div tabindex="0" aria-label="Get updates by sigining up for our newsletter" id="cloakEmail" class="cloakElement">
+                                        Email Address
+                                    </div>
+                                    <button id="cloakSubmit" class="cloakElement" aria-label="Get updates by sigining up for our newsletter">
+                                        GET UPDATES
+                                    </button>
+                                </div>
+
+                                <!--phase 1 spam fix end-->
+                                <!-- Original Form -->
+                                @*<form action="https://action.lung.org/site/SSurvey" method="post" name="responsiveSurvey" id="responsiveSurvey-footer" class="" target="redirectframe">
+                                        <div class="input-group newsletter-signup">
+                                            <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
+                                            @Html.Partial("Data/_NewsletterFields", "footer")
+                                            <span class="input-group-append">
+                                                <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
+                                            </span>
+                                            <div class="error email hidden">
+                                                Please enter a valid email address
+                                            </div>
+                                        </div>
+                                    </form>*@
+                                <!-- original form end-->
+                            </div>
+                            <div class="newsletter-after d-none">
+                                <p>
+                                    Thank you! You will now receive email updates from the American Lung Association.
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded",()=>   {
+  const showWorkingFormWithoutFocusQuiet = () => {
+      console.warn("showWorkingForm()");
+      const container = document.querySelector("#newsletter-before");
+      container.innerHTML = `
+          <form action="https://action.lung.org/site/SSurvey" method="post" name="responsiveSurvey" id="responsiveSurvey-footer" class="" target="redirectframe">
+              <div class="input-group newsletter-signup">
+                  <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
+                  @Html.Partial("Data/_NewsletterFields", "footer")
+                  <span class="input-group-append">
+                      <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
+                  </span>
+                  <div class="error email hidden">
+                      Please enter a valid email address
+                  </div>
+              </div>
+          </form>`;
+      document.querySelector("#responsiveSurvey-footer").style.display = "block";
+    //document.querySelector("#cloakEmailSelection").style.display = "none"; THIS IS ALREADY GONE because of the above code
+  }; // end showWorkingFormFocus()
+  const showWorkingFormFocus = () => {
+      console.warn("showWorkingForm()");
+      const container = document.querySelector("#newsletter-before");
+      container.innerHTML = `
+          <form action="https://action.lung.org/site/SSurvey" method="post" name="responsiveSurvey" id="responsiveSurvey-footer" class="" target="redirectframe">
+              <div class="input-group newsletter-signup">
+                  <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
+                  @Html.Partial("Data/_NewsletterFields", "footer")
+                  <span class="input-group-append">
+                      <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
+                  </span>
+                  <div class="error email hidden">
+                      Please enter a valid email address
+                  </div>
+              </div>
+          </form>`;
+      document.querySelector("#responsiveSurvey-footer").style.display = "block";
+    //document.querySelector("#cloakEmailSelection").style.display = "none"; THIS IS ALREADY GONE because of the above code
+    document.querySelector("#footer-email-signup").click();
+    document.querySelector("#newsletter-before").click();
+    document.querySelector("#newsletter-before #responsiveSurvey-footer input[name='cons_email']").focus();
+    document.querySelector("#newsletter-before #responsiveSurvey-footer input[name='cons_email']").focus();
+    document.querySelector("#newsletter-before #responsiveSurvey-footer input[name='cons_email']").click();
+
+  }; // end showWorkingFormFocus()
+
+  document.querySelector("#cloakEmailSection").addEventListener("focus",showWorkingFormFocus);
+  document.querySelector("#cloakEmailSection").addEventListener("click",showWorkingFormFocus);
+  document.querySelector("#cloakEmailSection").addEventListener("hover",showWorkingFormFocus);
+  document.querySelector("#cloakSubmit").addEventListener("hover",showWorkingFormFocus);
+  document.querySelector("#cloakEmail").addEventListener("hover",showWorkingFormFocus);
+  document.querySelector("#cloakEmail").addEventListener("focus",showWorkingFormFocus);
+  document.querySelector("#cloakEmail").addEventListener("click",showWorkingFormFocus);
+  // document.querySelector("#cloakEmailSection").addEventListener("focus", ()=> {
+  //   showWorkingForm();
+  //   console.warn(`1`);
+  // });
+  // document.querySelector("#cloakEmailSection").addEventListener("click", ()=> {
+  //   showWorkingForm();
+  //   console.warn(`2`);
+  // });
+  // document.querySelector("#cloakEmailSection").addEventListener("hover", ()=> {
+  //   showWorkingForm();
+  //   console.warn(`3`);
+  // });
+  // document.querySelector("#cloakSubmit").addEventListener("hover", ()=> {
+  //   showWorkingForm();
+  //   console.warn(`4`);
+  // });
+  // document.querySelector("#cloakEmail").addEventListener("hover", ()=> {
+  //   showWorkingForm();
+  //   console.warn(`5`);
+  // });
+  // document.querySelector("#cloakEmail").addEventListener("focus", ()=> {
+  //   showWorkingForm();
+  //   console.warn(`6`);
+  // });
+  // document.querySelector("#cloakEmail").addEventListener("click", ()=> {
+  //   showWorkingForm();
+  //   console.warn(`7`);
+  // });
+
+  $("#responsiveSurvey-footer").on("submit",function(){ $("#responsiveSurvey-footer").fadeOut(); $(".newsletter-after").removeClass("d-none"); });
+
+  let userIsActive = false; // Track if user did anything
+
+  function setActive() {
+      userIsActive = true;
+      // Remove these listeners after first activity to avoid overhead
+      window.removeEventListener('mousemove', setActive);
+      window.removeEventListener('scroll', setActive);
+      window.removeEventListener('keydown', setActive);
+      window.removeEventListener('touchstart', setActive);
+  };
+
+  // Listen for user activity
+  window.addEventListener('mousemove', ()=>{
+    setActive();
+    // console.log(`mousemove`);
+  });
+  window.addEventListener('scroll', ()=>{
+    setActive();
+    // console.log(`scroll`);
+  });
+  window.addEventListener('keydown', ()=>{
+    setActive();
+    // console.log(`keydown`);
+  });
+  window.addEventListener('touchstart', ()=>{
+    setActive();
+    // console.log(`touchstart`);
+  });
+
+  const randomDelay = Math.floor(Math.random() * 5000) + 5000; // 5000ms–10000ms
+  console.warn(randomDelay);
+  const checkForActivity = ()=>{
+      if(userIsActive){
+        console.warn(`user activity detected`);
+        showWorkingFormWithoutFocusQuiet();
+      } else {
+        console.warn(`no user activity as of ${randomDelay}`);
+      }
+  };
+  // setTimeout(checkForActivity, randomDelay);
+
+});
+</script>
