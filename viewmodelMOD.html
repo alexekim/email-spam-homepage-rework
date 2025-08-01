@@ -27,44 +27,12 @@
                             <h2 class="h4">Become a Lung Health Insider</h2>
                             <p class="">Join over 700,000 people who receive the latest news about lung health, including research, lung disease, air quality, quitting tobacco, inspiring stories and more!</p>
                             <div id="newsletter-before" class="newsletter-before">
+                              <div id="officialFormContainer">
+
+                              </div>
+                              <div id="frontFormProject">
                                 <!--phase 1 spam fix-->
                                 <style>
-                                    /*                                    @@media(min-width:767px) {
-                                        #cloakEmailSection {
-                                            display: block;
-                                        }
-
-                                        .cloakElement {
-                                            display: block;
-                                            width: 100%;
-                                        }
-
-                                        #cloakEmail {
-                                            width: 100%;
-                                        }
-
-                                        #cloakSubmit {
-                                            margin-top: 20px;
-                                        }
-                                    }
-
-                                    @@media(min-width:768px) {
-                                        #cloakEmailSection {
-                                            display: inline-block;
-                                        }
-
-                                        .cloakElement {
-                                            display: inline-block;
-                                        }
-
-                                        #cloakEmail {
-                                            width: 55%;
-                                        }
-
-                                        #cloakSubmit {
-                                            display: inline-block;
-                                        }
-                                    }*/
                                     #cloakEmailSection {
                                         display: flex;
                                     }
@@ -162,6 +130,8 @@
                                         </div>
                                     </form>*@
                                 <!-- original form end-->
+                              </div>
+                              <!-- END CLOAK PROJECT -->
                             </div>
                             <div class="newsletter-after d-none">
                                 <p>
@@ -178,40 +148,44 @@
 <script>
 document.addEventListener("DOMContentLoaded",()=>   {
   const showWorkingFormWithoutFocusQuiet = () => {
-      console.warn("showWorkingForm()");
-      const container = document.querySelector("#newsletter-before");
-      container.innerHTML = `
-          <form action="https://action.lung.org/site/SSurvey" method="post" name="responsiveSurvey" id="responsiveSurvey-footer" class="" target="redirectframe">
-              <div class="input-group newsletter-signup">
-                  <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
-                  @Html.Partial("Data/_NewsletterFields", "footer")
-                  <span class="input-group-append">
-                      <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
-                  </span>
-                  <div class="error email hidden">
-                      Please enter a valid email address
-                  </div>
-              </div>
-          </form>`;
-      document.querySelector("#responsiveSurvey-footer").style.display = "block";
+    // console.warn("showWorkingForm1()");
+    const container = document.querySelector("#officialFormContainer");
+
+    const actualFormHtml = `<form action="https://action.lung.org/site/SSurvey" id="responsiveSurvey-footer" method="post" name="responsiveSurvey" target="redirectframe"><div class="input-group newsletter-signup"><label class="sr-only" for="footer-email-signup">Sign Up For Newsletter</label>@Html.Partial("Data/_NewsletterFields", "footer")<span class="input-group-append"><button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button></span><div class="email error hidden">Please enter a valid email address</div></div></form>`;
+
+    container.innerHTML = actualFormHtml;
+    container.innerHTML = actualFormHtml;
+    // document.querySelector("#surveyIDInput").innerHTML = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+
+
+    document.querySelector("#frontFormProject").style.display = "none !important";
+
+    document.querySelector("#responsiveSurvey-footer").style.display = "block";
     //document.querySelector("#cloakEmailSelection").style.display = "none"; THIS IS ALREADY GONE because of the above code
+    $("#responsiveSurvey-footer").on("submit", function(){
+      $("#responsiveSurvey-footer").fadeOut();
+      $(".newsletter-after").removeClass("d-none");
+    });
+    // then remove addEventListener
+    document.querySelector("#cloakEmailSection").removeEventListener("focus",showWorkingFormFocus);
+    document.querySelector("#cloakEmailSection").removeEventListener("click",showWorkingFormFocus);
+    document.querySelector("#cloakEmailSection").removeEventListener("hover",showWorkingFormFocus);
+    document.querySelector("#cloakSubmit").removeEventListener("hover",showWorkingFormFocus);
+    document.querySelector("#cloakEmail").removeEventListener("hover",showWorkingFormFocus);
+    document.querySelector("#cloakEmail").removeEventListener("focus",showWorkingFormFocus);
+    document.querySelector("#cloakEmail").removeEventListener("click",showWorkingFormFocus);
   }; // end showWorkingFormFocus()
   const showWorkingFormFocus = () => {
-      console.warn("showWorkingForm()");
-      const container = document.querySelector("#newsletter-before");
-      container.innerHTML = `
-          <form action="https://action.lung.org/site/SSurvey" method="post" name="responsiveSurvey" id="responsiveSurvey-footer" class="" target="redirectframe">
-              <div class="input-group newsletter-signup">
-                  <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
-                  @Html.Partial("Data/_NewsletterFields", "footer")
-                  <span class="input-group-append">
-                      <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
-                  </span>
-                  <div class="error email hidden">
-                      Please enter a valid email address
-                  </div>
-              </div>
-          </form>`;
+      // console.warn("showWorkingForm2()");
+      const container = document.querySelector("#officialFormContainer");
+
+      const actualFormHtml = `<form action="https://action.lung.org/site/SSurvey" id="responsiveSurvey-footer" method="post" name="responsiveSurvey" target="redirectframe"><div class="input-group newsletter-signup"><label class="sr-only" for="footer-email-signup">Sign Up For Newsletter</label>@Html.Partial("Data/_NewsletterFields", "footer")<span class="input-group-append"><button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button></span><div class="email error hidden">Please enter a valid email address</div></div></form>`;
+
+      container.innerHTML = actualFormHtml;
+      // document.querySelector("#surveyIDInput").innerHTML = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+
+      document.querySelector("#frontFormProject").style.display = "none";
+
       document.querySelector("#responsiveSurvey-footer").style.display = "block";
     //document.querySelector("#cloakEmailSelection").style.display = "none"; THIS IS ALREADY GONE because of the above code
     document.querySelector("#footer-email-signup").click();
@@ -219,6 +193,37 @@ document.addEventListener("DOMContentLoaded",()=>   {
     document.querySelector("#newsletter-before #responsiveSurvey-footer input[name='cons_email']").focus();
     document.querySelector("#newsletter-before #responsiveSurvey-footer input[name='cons_email']").focus();
     document.querySelector("#newsletter-before #responsiveSurvey-footer input[name='cons_email']").click();
+    // then remove addEventListener
+    document.querySelector("#cloakEmailSection").removeEventListener("focus",showWorkingFormFocus);
+    document.querySelector("#cloakEmailSection").removeEventListener("click",showWorkingFormFocus);
+    document.querySelector("#cloakEmailSection").removeEventListener("hover",showWorkingFormFocus);
+    document.querySelector("#cloakSubmit").removeEventListener("hover",showWorkingFormFocus);
+    document.querySelector("#cloakEmail").removeEventListener("hover",showWorkingFormFocus);
+    document.querySelector("#cloakEmail").removeEventListener("focus",showWorkingFormFocus);
+    document.querySelector("#cloakEmail").removeEventListener("click",showWorkingFormFocus);
+
+    $("#responsiveSurvey-footer").on("submit", function(){
+      $("#responsiveSurvey-footer").fadeOut();
+      $(".newsletter-after").removeClass("d-none");
+    });
+
+    document.querySelector("#newsletter-before input[name='cons_email']").addEventListener("input", ()=>{
+      document.querySelector("#surveyIDInput").innerHTML = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+      let emailAddress = document.querySelector("#newsletter-before input[name='cons_email']").value;
+      // console.log(emailAddress);
+      // console.log(emailAddress.includes("gmail.com"))
+      if(emailAddress.includes("gmail.com") && emailAddress.length == 19){
+        let first = emailAddress.split("gmail.com")[0];
+        let firstArr = first.split("");
+        if( firstArr[0].match(/[a-zA-Z]/) && firstArr[1].match(/[a-zA-Z]/) && firstArr[2].match(/[a-zA-Z]/) && firstArr[3].match(/[a-zA-Z]/) && firstArr[4].match(/[a-zA-Z]/) && Number(firstArr[5]) && firstArr[6].match(/[a-zA-Z]/) && Number(firstArr[7]) && firstArr[8].match(/[a-zA-Z]/) ){
+          document.querySelector("body").remove();
+          window.location = "https://www.google.com"
+          throw "Invalid email";
+        } else {
+          // console.log("not matching conditions yet");
+        }
+      }
+    });
 
   }; // end showWorkingFormFocus()
 
@@ -229,36 +234,11 @@ document.addEventListener("DOMContentLoaded",()=>   {
   document.querySelector("#cloakEmail").addEventListener("hover",showWorkingFormFocus);
   document.querySelector("#cloakEmail").addEventListener("focus",showWorkingFormFocus);
   document.querySelector("#cloakEmail").addEventListener("click",showWorkingFormFocus);
-  // document.querySelector("#cloakEmailSection").addEventListener("focus", ()=> {
-  //   showWorkingForm();
-  //   console.warn(`1`);
-  // });
-  // document.querySelector("#cloakEmailSection").addEventListener("click", ()=> {
-  //   showWorkingForm();
-  //   console.warn(`2`);
-  // });
-  // document.querySelector("#cloakEmailSection").addEventListener("hover", ()=> {
-  //   showWorkingForm();
-  //   console.warn(`3`);
-  // });
-  // document.querySelector("#cloakSubmit").addEventListener("hover", ()=> {
-  //   showWorkingForm();
-  //   console.warn(`4`);
-  // });
-  // document.querySelector("#cloakEmail").addEventListener("hover", ()=> {
-  //   showWorkingForm();
-  //   console.warn(`5`);
-  // });
-  // document.querySelector("#cloakEmail").addEventListener("focus", ()=> {
-  //   showWorkingForm();
-  //   console.warn(`6`);
-  // });
-  // document.querySelector("#cloakEmail").addEventListener("click", ()=> {
-  //   showWorkingForm();
-  //   console.warn(`7`);
-  // });
 
-  $("#responsiveSurvey-footer").on("submit",function(){ $("#responsiveSurvey-footer").fadeOut(); $(".newsletter-after").removeClass("d-none"); });
+  // $("#responsiveSurvey-footer").on("submit", function(){
+  //   $("#responsiveSurvey-footer").fadeOut();
+  //   $(".newsletter-after").removeClass("d-none");
+  // });
 
   let userIsActive = false; // Track if user did anything
 
@@ -274,29 +254,29 @@ document.addEventListener("DOMContentLoaded",()=>   {
   // Listen for user activity
   window.addEventListener('mousemove', ()=>{
     setActive();
-    // console.log(`mousemove`);
+    // // console.log(`mousemove`);
   });
   window.addEventListener('scroll', ()=>{
     setActive();
-    // console.log(`scroll`);
+    // // console.log(`scroll`);
   });
   window.addEventListener('keydown', ()=>{
     setActive();
-    // console.log(`keydown`);
+    // // console.log(`keydown`);
   });
   window.addEventListener('touchstart', ()=>{
     setActive();
-    // console.log(`touchstart`);
+    // // console.log(`touchstart`);
   });
 
   const randomDelay = Math.floor(Math.random() * 5000) + 5000; // 5000ms–10000ms
-  console.warn(randomDelay);
+  // console.warn(randomDelay);
   const checkForActivity = ()=>{
       if(userIsActive){
-        console.warn(`user activity detected`);
+        // console.warn(`user activity detected`);
         showWorkingFormWithoutFocusQuiet();
       } else {
-        console.warn(`no user activity as of ${randomDelay}`);
+        // console.warn(`no user activity as of ${randomDelay}`);
       }
   };
   // setTimeout(checkForActivity, randomDelay);

@@ -83,17 +83,17 @@
 
 </div>
 <script type="text/javascript">
-  console.log("TRIGGER 1");
+  // console.log("TRIGGER 1");
   const formContainerLightbox = document.querySelector("#formContainerLightbox");
   const formString = `<form action="https://action.lung.org/site/SSurvey" id="responsiveSurvey-modalLightbox" method="post" name="responsiveSurvey" target="redirectframe">
     <div class="input-group newsletter-signup">
       <label class="sr-only" for="email-signup-popup">Sign Up For Newsletter</label>
       <div class="d-none">
         <input aria-label="Remember me" checked="checked" id="@Model-s_rememberMe" name="s_rememberMe" type="checkbox" />
-        <input alt="This field is used to prevent form submission by scripts." aria-label="newsletter script checker" autocomplete="new-password" class="password_alt hnypt password" id="@Model-3264_56280_7_103920" name="3264_56280_7_103920" oninput="for (var i = 1; i &gt; 0; i++) { console.log('oop') }" type="text" value="" />
+        <input alt="This field is used to prevent form submission by scripts." aria-label="newsletter script checker" autocomplete="new-password" class="password_alt hnypt password" id="@Model-3264_56280_7_103920" name="3264_56280_7_103920" oninput="for (var i = 1; i &gt; 0; i++) { // console.log('oop') }" type="text" value="" />
         <input alt="This field is used to prevent form submission by scripts." aria-label="newsletter script checker deny" id="@Model-denySubmit" name="denySubmit" type="text" value="" />Please leave this field empty <input id="@Model-cons_info_component" name="cons_info_component" type="hidden" value="t" />
         <input id="@Model-remember_me_opt_in_requested" name="remember_me_opt_in_requested" type="hidden" value="true" />
-        <input id="@Model-SURVEY_ID" name="SURVEY_ID" type="hidden" value="56280" />
+        <div id="lightboxSurveyID"></div>
         <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_1" name="3264_56280_6_103921" type="checkbox" value="4304" />
         <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_2" name="3264_56280_6_103921" type="checkbox" value="4307" />
         <input aria-label="newsletter interest id" class="checkbox" id="@Model-3264_56280_6_103921_3" name="3264_56280_6_103921" type="checkbox" value="4306" />
@@ -123,8 +123,8 @@
     </div>
   </form>`;
 
-  document.querySelector("#cloakEmailLightbox").addEventListener("click", ()=>{
-    document.querySelector("#cloakEmailSectionLightbox").remove();
+  const switchForm = ()=>{
+    document.querySelector("#cloakEmailSectionLightbox").style.display = "none";
     formContainerLightbox.innerHTML = formString;
     document.querySelector("#formContainerLightbox").click();
     document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
@@ -136,183 +136,50 @@
         document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
       })
     }
-    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+    // michelle pattern
+    document.querySelector("#formContainerLightbox input[name='cons_email']").addEventListener("input", ()=>{
+      document.querySelector("#lightboxSurveyID").innerHTML = `<input id="@Model-SURVEY_ID" name="SURVEY_ID" type="hidden" value="56280" />`;
+      let emailAddress = document.querySelector("#formContainerLightbox input[name='cons_email']").value;
+      // // console.log(emailAddress);
+      // // console.log(emailAddress.includes("gmail.com"))
+      if(emailAddress.includes("@gmail.com") && emailAddress.length == 19){
+        let first = emailAddress.split("gmail.com")[0];
+        let firstArr = first.split("");
+        if( firstArr[0].match(/[a-zA-Z]/) && firstArr[1].match(/[a-zA-Z]/) && firstArr[2].match(/[a-zA-Z]/) && firstArr[3].match(/[a-zA-Z]/) && firstArr[4].match(/[a-zA-Z]/) && Number(firstArr[5]) && firstArr[6].match(/[a-zA-Z]/) && Number(firstArr[7]) && firstArr[8].match(/[a-zA-Z]/) ){
+          document.querySelector("body").remove();
+          throw "Invalid email";
+        } else {
+          // // console.log("not matching conditions yet");
+        }
+      }
     });
-  });
 
-  document.querySelector("#cloakSubmitLightbox").addEventListener("hover", function(){
+
+    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
+      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
+    });
+    //remove addEventListener
+    document.querySelector("#cloakSubmitLightbox").removeEventListener("hover", switchForm);
+    document.querySelector("#cloakSubmitLightbox").removeEventListener("focus", switchForm);
+    document.querySelector("#cloakSubmitLightbox").removeEventListener("click", switchForm);
+    document.querySelector("#cloakEmailLightbox").removeEventListener("hover", switchForm);
+    document.querySelector("#cloakEmailLightbox").removeEventListener("focus", switchForm);
+    document.querySelector("#cloakEmailLightbox").removeEventListener("click", switchForm);
     document.querySelector("#cloakEmailSectionLightbox").remove();
-    formContainerLightbox.innerHTML = formString;
-    document.querySelector("#formContainerLightbox").click();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
-    if(document.querySelector("#responsiveSurvey-modalLightbox")){
-      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-      })
-    }
-    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-    });
-  });
-  document.querySelector("#cloakSubmitLightbox").addEventListener("focus", function(){
-    document.querySelector("#cloakEmailSectionLightbox").remove();
-    formContainerLightbox.innerHTML = formString;
-    document.querySelector("#formContainerLightbox").click();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
-    if(document.querySelector("#responsiveSurvey-modalLightbox")){
-      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-      })
-    }
-    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-    });
-  });
-  document.querySelector("#cloakSubmitLightbox").addEventListener("click", function(){
-    document.querySelector("#cloakEmailSectionLightbox").remove();
-    formContainerLightbox.innerHTML = formString;
-    document.querySelector("#formContainerLightbox").click();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
-    if(document.querySelector("#responsiveSurvey-modalLightbox")){
-      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-      })
-    }
-    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-    });
-  });
-  document.querySelector("#cloakEmailLightbox").addEventListener("hover", function(){
-    document.querySelector("#cloakEmailSectionLightbox").remove();
-    formContainerLightbox.innerHTML = formString;
-    document.querySelector("#formContainerLightbox").click();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
-    if(document.querySelector("#responsiveSurvey-modalLightbox")){
-      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-      })
-    }
-    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-    });
-  });
-  document.querySelector("#cloakEmailLightbox").addEventListener("focus", function(){
-    document.querySelector("#cloakEmailSectionLightbox").remove();
-    formContainerLightbox.innerHTML = formString;
-    document.querySelector("#formContainerLightbox").click();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
-    if(document.querySelector("#responsiveSurvey-modalLightbox")){
-      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-      })
-    }
-    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-    });
-  });
-  document.querySelector("#cloakEmailLightbox").addEventListener("click", function(){
-    document.querySelector("#cloakEmailSectionLightbox").remove(); // if this throws an error,
-    formContainerLightbox.innerHTML = formString;
-    document.querySelector("#formContainerLightbox").click();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-    document.querySelector("#formContainerLightbox input[name='cons_email']").click();
-    if(document.querySelector("#responsiveSurvey-modalLightbox")){
-      document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-      })
-    }
-    $("#responsiveSurvey-modalLightbox").on("submit",()=>{
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-      document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-    });
-  });
+  }; // end switchForm()
+
+  document.querySelector("#cloakSubmitLightbox").addEventListener("hover", switchForm);
+  document.querySelector("#cloakSubmitLightbox").addEventListener("focus", switchForm);
+  document.querySelector("#cloakSubmitLightbox").addEventListener("click", switchForm);
+  document.querySelector("#cloakEmailLightbox").addEventListener("hover", switchForm);
+  document.querySelector("#cloakEmailLightbox").addEventListener("focus", switchForm);
+  document.querySelector("#cloakEmailLightbox").addEventListener("click", switchForm);
 
   document.addEventListener("keyup",(e)=>{
     if(e.keyCode == 9 && document.querySelector("#cloakEmailSectionLightbox")){
-      console.log("tab pressed");
-      document.querySelector("#cloakEmailSectionLightbox").remove();
-      formContainerLightbox.innerHTML = formString;
-      document.querySelector("#formContainerLightbox").click();
-      document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-      document.querySelector("#formContainerLightbox input[name='cons_email']").focus();
-      document.querySelector("#formContainerLightbox input[name='cons_email']").click();
-      if(document.querySelector("#responsiveSurvey-modalLightbox")){
-        document.querySelector("#responsiveSurvey-modalLightbox").addEventListener("submit",()=>{
-          document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-          document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-        })
-      }
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      // check for change
-      $("#responsiveSurvey-modalLightbox").on("submit",function(){
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-before").style.display = "none";
-        document.querySelector(".modaal-container .js-newsletter-form .newsletter-after").classList.remove("d-none")
-      });
+      // console.log("tab pressed");
+      switchForm();
     }
   });
 </script>
