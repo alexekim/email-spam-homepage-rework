@@ -1,0 +1,112 @@
+@model BaseViewModel
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<section data-ktc-search-exclude class="section section-signup bg-white">
+    <div class="global-container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="section-signup-donate">
+                    <h2 class="h4">Make a Donation</h2>
+                    <p class="">
+                        Your tax-deductible donation funds lung disease and lung cancer research, new treatments, lung health education, and more.
+                    </p>
+                    <a id="signUpDonateBtn" href="/donate" class="btn secondary-btn homeDonateBtn">Make a Donation</a>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="section-signup-email">
+                    @if (Model.IsLoggedIn)
+                    {
+                    <h2 class="h4">Get Involved</h2>
+                    <p>We need your help! Participate in an event, become a volunteer, advocate for laws, share your story or make a donation.</p>
+                    <a href="/get-involved" class="btn btn-primary getInvolvedBtn">GET UPDATES</a>
+                    }
+                    else
+                    {
+                    <div class="js-newsletter-form">
+                        <h2 class="h4">Become a Lung Health Insider</h2>
+                        <p class="">Join over 700,000 people who receive the latest news about lung health, including research, lung disease, air quality, quitting tobacco, inspiring stories and more!</p>
+                        <div class="newsletter-before">
+                            <form action="https://action.lung.org/site/SSurvey" method="post" name="responsiveSurvey" id="responsiveSurvey-footer" class="" target="redirectframe">
+                                <div class="input-group newsletter-signup">
+                                    <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
+                                    @Html.Partial("Data/_NewsletterFields", "footer")
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
+                                    </span>
+                                    <div class="error email hidden">
+                                        Please enter a valid email address
+                                    </div>
+                                </div>
+                                <!-- TURNSTILE CODE ADDED HERE -->
+                                <div id="turnstileFooter"></div>        
+                                <!-- 
+                                <div class="cf-turnstile" data-sitekey="0x4AAAAAABlDXLgHJmBysAtP"></div> 
+                                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                                -->
+                                <!-- TURNSTILE CODE ADDED HERE -->
+                            </form>
+                        </div>
+                        <div class="newsletter-after d-none">
+                            <p>
+                                Thank you! You will now receive email updates from the American Lung Association.
+                            </p>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const lungTurnstileApi = (token)=>{
+        const turnstileFooter = document.querySelector("#turnstileFooter");
+        console.log(`token: ${token}`);
+        turnstile.render("#turnstileFooter", {
+            sitekey: "0x4AAAAAABlDXLgHJmBysAtP",
+            callback: function(token){
+                console.log(`turnstile token: ${token}`);
+                fetch('/api/turnstile/validate', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({token: token})
+                })//end fetch
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Server validation result:", data);
+                    if (data.success) {
+                        alert("SUCCESS from lung.org/api/turnstile/validate")
+                        // Submit the form manually
+                        // document.getElementById('lightboxForm').submit();
+                        //INSTEAD add in the SURVEY_ID
+                        let surveyID = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+                        document.querySelector("#surveyIDInput").innerHTML  = surveyID;
+                        return true;
+                    } else {
+                        alert("Verification failed. Please try again.");
+                    }
+                })
+                .catch(err => {
+                    console.error("Error validating Turnstile:", err);
+                    alert("Something went wrong.");
+                }); // end fetch statement
+            }
+        })// end turnstile.render()
+    }; // end lungTurnstileApi();   
+
+    document.addEventListener("DOMContentLoaded", ()=>{
+        console.log("footer code initiate");
+        let token = document.querySelector('[name="cf-turnstile-response"]').value;
+        lungTurnstileApi(token);
+    })// end DOMContentLoaded
+
+    document.getElementById("responsiveSurvey-footer").addEventListener('submit', function(e) {
+        e.preventDefault(); // block until token validated
+        // The fetch call above will submit the form when it's valid
+        let token = document.querySelector('[name="cf-turnstile-response"]').value;
+        lungTurnstileApi(token);
+    });
+</script>

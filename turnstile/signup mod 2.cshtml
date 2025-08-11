@@ -1,0 +1,133 @@
+@model BaseViewModel
+
+<section data-ktc-search-exclude class="section section-signup bg-white">
+    <div class="global-container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="section-signup-donate">
+                    <h2 class="h4">Make a Donation</h2>
+                    <p class="">
+                        Your tax-deductible donation funds lung disease and lung cancer research, new treatments, lung health education, and more.
+                    </p>
+                    <a id="signUpDonateBtn" href="/donate" class="btn secondary-btn homeDonateBtn">Make a Donation</a>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="section-signup-email">
+                    @if (Model.IsLoggedIn)
+                    {
+                    <h2 class="h4">Get Involved</h2>
+                    <p>We need your help! Participate in an event, become a volunteer, advocate for laws, share your story or make a donation.</p>
+                    <a href="/get-involved" class="btn btn-primary getInvolvedBtn">GET UPDATES</a>
+                    }
+                    else
+                    {
+                    <div class="js-newsletter-form">
+                        <h2 class="h4">Become a Lung Health Insider</h2>
+                        <p class="">Join over 700,000 people who receive the latest news about lung health, including research, lung disease, air quality, quitting tobacco, inspiring stories and more!</p>
+                        <div class="newsletter-before">
+                            <form action="https://action.lung.org/site/SSurvey" method="post" name="responsiveSurvey" id="responsiveSurvey-footer" class="" target="redirectframe">
+                                <div class="input-group newsletter-signup">
+                                    <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
+                                    @Html.Partial("Data/_NewsletterFields", "footer")
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
+                                    </span>
+                                    <div class="error email hidden">
+                                        Please enter a valid email address
+                                    </div>
+                                </div>
+                                <!-- TURNSTILE CODE ADDED HERE -->
+                                <!-- <div class="cf-turnstile" data-sitekey="0x4AAAAAABlDXLgHJmBysAtP"></div> -->
+                                <div id="turnstileFooter"></div>
+                                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                                <!-- TURNSTILE CODE ADDED HERE -->
+                            </form>
+                        </div>
+                        <div class="newsletter-after d-none">
+                            <p>
+                                Thank you! You will now receive email updates from the American Lung Association.
+                            </p>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+        const turnstileFooter = document.querySelector("#turnstileFooter");
+        turnstile.render("#turnstileFooter", {
+            sitekey: "0x4AAAAAABlDXLgHJmBysAtP",
+            callback: function(token){
+                console.log(`turnstile token: ${token}`);
+                fetch('/api/turnstile/validate', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({token: token})
+                })//end fetch
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Server validation result:", data);
+                    if (data.success) {
+                        alert("SUCCESS from lung.org/api/turnstile/validate")
+                        // Submit the form manually
+                        // document.getElementById('lightboxForm').submit();
+                        //INSTEAD add in the SURVEY_ID
+                        let surveyID = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+                        document.querySelector("#surveyIDInput").innerHTML  = surveyID;
+                    } else {
+                        alert("Verification failed. Please try again.");
+                    }
+                })
+                .catch(err => {
+                    console.error("Error validating Turnstile:", err);
+                    alert("Something went wrong.");
+                });
+            }
+        })// end turnstile.render()
+    })// end DOMContentLoaded
+
+    // document.getElementById("responsiveSurvey-footer").addEventListener('submit', function(e) {
+    //     e.preventDefault(); // block until token validated
+    //     // The fetch call above will submit the form when it's valid
+    // });
+
+    // TESTING
+    // var token = '0.tTyB3sJbd9_J70wHPcrbl-L7YdxI3-w4nDVGq14aFMZ_pOGtn6y6vQmSkZ1yDOkZ0IjekAEYwHYndnCiBeE1B8vRT_9Dav0HjooqkzHk-Y4eF9c4udJshKxv0_dcL6EPuF7z8_WTEdVBLrOfm2d7bNPUIlEfGz4ifsmIpxno2iAKXGKmJHwoQbSJTO5bWLKBotKuj4KS5-g4FWEBX-2KJTJ1TbkBLS5e6TnyFg3TBMHc3dQJ4nYr35NoAcYJBkFfuaeMJk0DBbFwRd02sCs7DM1klWfEeS8cjaT2mxEq_3xLaWg3XbxxoysrczmBRVCX_n-XNHJixKLgwmVBl0TpYu1pLEnr1npAVk15oflcenfksW6Y52AGgs3wpRlEBHRXEeFFqGPw81XERCTk8ofPRaQDKAyoDzoQ_zf8fAyfZtwuwKHM-UQJK22nYhZeA1OEZXj3OHSGvHT4YLLWb5H2ak2-bEQ3KfLNAGVUdp9r0dmF0ALCOyLtta86ho62VcN68c7-dMZBER8ec6lTI1HfD-TTMqXrYUeMPjADVnDf7qDhHnM2H5LgZBbUubN9PQkIn4Is2i2WnbQmEkm3BjFuSSFAX1qRARWPU1ccmveJRIAZaEBCgCWex3qeNKyqjgfQ_J9bwzPTOwiEFkCwFgT1T5eHfHmB1CO8to4k7T094nHScFDaOxFma_ioGsbHuaU1YUKPENBjV6JSBDAm7_VObaB1J-eMEpRcBgq3VDnKBxRFqTFP3Mu6D1ORSrH_dw0bwLk3OCwPovAS0iv3r6S0FaY42y-CVNvfFUM_NMA24rcsJrcyfQZRfV-zzVc28pEICzudPvpgcWGU8KKtfC2nUtaFU-WhdyV8cRh-jiLiDgLyLq6e2Px6QztMN9RMqyy_XcwaWBbWEFurMYO-euJn8lOnUVpzI21t5t7nTsGZKDo.izFUl324HoB7qO53pq8CDw.10cd5a693ea28e02ff982d8e833e4b58eedc4fae728141f305f64c0ce180175c';
+    var token = document.querySelector('[name="cf-turnstile-response"]').value;
+    var dataResult;
+    fetch('/api/turnstile/validate', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({token: token})
+    })//end fetch
+    .then(res => res.json())
+    .then(data => {
+        console.log("Server validation result:", data);
+        dataResult = JSON.parse(data);
+        console.log(`success?: ${dataResult.success}`);
+    });
+
+
+    var token = document.querySelector('[name="cf-turnstile-response"]').value;
+    $.ajax({
+        url: "/api/turnstile/validate",
+        data: {
+            "sitekey": "0x4AAAAAABlDXLgHJmBysAtP",
+            token: token
+         },
+        type: "POST",
+        success: function(json){
+            console.log(json)
+
+        },
+        error: function(err){
+            console.warn(err);
+        }
+    });
+</script>

@@ -1,3 +1,5 @@
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <p>Join over 700,000 people who receive the latest news about lung health, including research, lung disease, air quality, quitting tobacco, inspiring stories and more!</p>
 
 <form action="https://action.lung.org/site/SSurvey" id="responsiveSurvey-modal" method="post" name="responsiveSurvey" target="redirectframe">
@@ -8,26 +10,31 @@
 
 <div class="error email hidden">Please enter a valid email address</div>
 </div>
-<div class="cf-turnstile" data-sitekey="0x4AAAAAABlpesmkL3SpjuSy"></div>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<!-- <div class="cf-turnstile" data-sitekey="0x4AAAAAABlDXLgHJmBysAtP"></div> -->
+<div id="turnstileLightbox"></div>
 </form>
 
-fetch("https://secure2.convio.net/ORG/site/Survey", {
-  method: "POST",
-  body: new URLSearchParams({
-    SURVEY_ID: "56280",
-    email: "test@example.com",
-    question1: "Blue"
-  }),
-  mode: "cors"
-});
+<div>
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      console.log("LIGHTBOX LOAD");
+      turnstile.render('#turnstileLightbox', {
+        sitekey: '0x4AAAAAABlDXLgHJmBysAtP',
+        theme: 'light',
+        callback: function(token) {
+            console.log("Lightbox token:", token);
+        }
+      });
+    }); // end documentready
 
-fetch("https://action.lung.org/site/SSurvey", {
-  method: "POST",
-  body: new URLSearchParams({
-    SURVEY_ID: "56280",
-    cons_email: "test@example.com",
-    question1: "Blue"
-  }),
-  mode: "cors"
-});
+    document.querySelector('#responsiveSurvey-modal').addEventListener('submit', function(e) {
+      const token = document.querySelector('input[name="cf-turnstile-response"]').value;
+      if (!token) {
+        e.preventDefault();
+        alert("Please complete the CAPTCHA");
+      }
+    });
+
+
+  </script>
+</div>
