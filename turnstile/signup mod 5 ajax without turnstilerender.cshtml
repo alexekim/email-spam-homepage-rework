@@ -1,6 +1,15 @@
 @model BaseViewModel
 
 <!-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> -->
+<style>
+    #responsiveSurvey-footer .btn-submit {
+        background: gray;
+    }
+    #footerEmailErr2{
+        color:#D0021B; 
+        font-size:1rem;
+    }
+</style>
 <section data-ktc-search-exclude class="section section-signup bg-white">
     <div class="global-container">
         <div class="row">
@@ -33,22 +42,26 @@
                                     <label for="footer-email-signup" class="sr-only">Sign Up For Newsletter</label>
                                     @Html.Partial("Data/_NewsletterFields", "footer")
                                     <span class="input-group-append">
-                                        <button class="btn btn-primary btn-submit" type="submit">GET UPDATES</button>
+                                        <button id="footerSubmitBtn" class="btn btn-primary btn-submit" type="submit" disabled>GET UPDATES</button>
                                     </span>
-                                    <div class="error email hidden">
-                                        Please enter a valid email address
+                                    <div id="footerEmailErr" class="error email hidden">
+                                        Please enter a valid email address, or wait for Cloudflare validation.
                                     </div>
                                 </div>
                                 <!-- TURNSTILE CODE ADDED HERE -->
                                 <!-- <div id="turnstileFooter"></div>         -->
                                 
                                 <div id="turnstileFooter">
+                                    <!-- <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA"></div>  -->
                                     <div class="cf-turnstile" data-sitekey="0x4AAAAAABlDXLgHJmBysAtP"></div> 
                                     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
                                 </div>
                                 
                                 <!-- TURNSTILE CODE ADDED HERE -->
                             </form>
+                            <div id="footerEmailErr2" class=" ">
+                                Cloudflare currently validating...
+                            </div>
                         </div>
                         <div class="newsletter-after d-none">
                             <p>
@@ -67,11 +80,17 @@
     let successfulToken = false;
 
     const finalizeSurvey = ()=>{
-        let surveyID = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
-        document.querySelector("#surveyIDInput").innerHTML  = surveyID;
-        successfulToken = true;
-        // document.getElementById("footer-email-signup").removeEventListner("input")
-        // document.getElementById("responsiveSurvey-footer").removeEventListner("submit")
+        if(successfulToken){
+            console.warn("finalizeSurvey running");
+            // let surveyID = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
+            let surveyID = `<input type="hidden" name="SURVEY_ID" id="footer-SURVEY_ID" value="56280">`
+            if (document.querySelector("#surveyIDInput").innerHTML == "" ){
+                document.querySelector("#surveyIDInput").innerHTML  = surveyID;
+                document.querySelector("#responsiveSurvey-footer .btn-submit").removeAttribute("disabled");  
+                document.querySelector("#responsiveSurvey-footer .btn-submit").style.background = "#0064ff";    
+                document.querySelector("#footerEmailErr2").style.display = "none"; 
+            }
+        }
     };
 
     const initialCheck = () => {
@@ -86,14 +105,17 @@
                 let token = document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value;
 
                 if(token){ // if the token is loaded
-                    console.warn("initialCheck: token HAS loaded.")
-                    if(lungTurnstileApi(token)){ // if it returns true, successful token. 
-                        finalizeSurvey();
-                    } else {
-                        console.warn("DOMContentLoaded: input is there, but NO token yet");
-                    }
+                    console.warn("initialCheck: token HAS loaded.");
+                    lungTurnstileApi(token, "DOMContentLoadedMethod");
+                    // NO LONGER USING THIS. let the api call make the decision
+                    // if(lungTurnstileApi(token)){ // if it returns true, successful token. 
+                    //     finalizeSurvey();
+                    // } else {
+                    //     console.warn("DOMContentLoaded: input is there, but NO token yet");
+                    // }
                 } else {
-                    console.warn("initialCheck: token has NOT loaded yet.")
+                    console.warn("initialCheck: token has NOT loaded yet.");
+                    document.querySelector("#footerEmailErr2").style.display = "block";
                 }
             } else {
                 console.warn("on submit: no input yet, turnstile has NOT loaded.");
@@ -101,39 +123,100 @@
         } // END of first if statement          
     }; // end initial check
 
-    const lungTurnstileApi = (token) => {
-        console.log(`token: ${token}`);
-   	    $.ajax({
-	        url: "/api/turnstile/validate",
-	        data: {
-	            "sitekey": "0x4AAAAAABlDXLgHJmBysAtP",
-	            token: token
-	         },
-	        type: "POST",
-	        success: function(json){
-	        	console.log(`SUCCESS from lung.org/api/turnstile.validate`);
-	            console.log(json);
-                return true;
-	        },
-	        error: function(err){
-	            console.warn(err);
-	            alert("Verification failed. Please try again.");
-	            return false;
-	        }
-	    });
+    const lungTurnstileApi = (token, method) => {
+        console.warn(`token: ${token}`);
+        if(!method){
+            console.warn("no method given");
+        } else {
+            $.ajax({
+                url: "/api/turnstile/validate",
+                data: {
+                    "sitekey": "0x4AAAAAABlDXLgHJmBysAtP",
+                    // "sitekey": "1x00000000000000000000AA",
+                    token: token
+                 },
+                type: "POST",
+                success: function(json){
+                    console.warn(`ajax: response successfully received from lung.org/api/turnstile.validate now logging response:`);
+                    console.warn(json);
+                    if(typeof(json) == "string"){
+                        console.warn(`ajax: response came as string. now running JSON.parse(json) :`);
+                        json = JSON.parse(json);
+                        console.warn(json);
+                    } else if(typeof(json) == "object" ){
+                        console.warn(`ajax: response came as object.`);
+                    } else {
+                        console.warn(`ajax: response came as ${typeof(json)}. re-evaulate code`);
+                    }
+                    console.warn(`ajax: json["success"]: ${json["success"]}`);
+                    if(json["success"]){
+                        console.warn(`ajax: API gave a 'success: true' signal. change successfulToken variable to true. call finalizeSurvey() next`);
+                        successfulToken = true;
+                        if(method == "inputMethod"){
+                            console.warn(`ajax: method was inputMethod. now calling finalizeSurvey()`);
+                            // document.getElementById("footer-email-signup").removeEventListener('input', debounce(inputCheck,500)); // not working. explore.
+                            finalizeSurvey();
+                        } else if (method == "submitMethod"){
+                            console.warn(`ajax: method was submitMethod. now calling finalizeSurvey(), then submitting survey`);
+                            finalizeSurvey();
+                            document.querySelector("#footerSubmitBtn").click();
+                        } else if (method == "DOMContentLoadedMethod"){
+                            console.warn(`ajax: method was DOMContentLoadedMethod. now calling finalizeSurvey()`);
+                            finalizeSurvey();
+                        }else if(method == "intervalTokenCheckMethod"){
+                            console.warn(`ajax: method was intervalTokenCheckMethod. now calling finalizeSurvey()`);
+                            finalizeSurvey();
+                        } else {
+                            console.warn("lungTurnstileApi: method not provided. survey not finalized.");
+                            return false;
+                        }
+                        return true;
+                    } else {
+                        console.warn(`API gave a success: false signal. check why.`);
+                        // disable submit here? warn the user?
+                        return false;
+                    }                
+                },
+                error: function(err){
+                    console.warn(err);
+                    console.warn("ajax: response FAILED. check API.");
+                }
+            });            
+        }
+
     }; // end lungTurnstileApi();   
+
+    // const intervalTokenCheck = () =>{
+    //     console.warn("intervalTokenCheck running");
+    //     if(document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value.length){
+    //         let token = document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value;
+    //         lungTurnstileApi(token, "intervalTokenCheckMethod");
+    //         clearInterval(intervalId);
+    //     }
+    // }; // end intervalTokenCheck
 
     // run when load
     document.addEventListener("DOMContentLoaded", ()=>{
         console.warn("DOMContentLoaded on footer signup");
-        setTimeout(initialCheck, 2000);
+        // document.querySelector("#responsiveSurvey-footer .btn-submit").addAttribute("disabled", "disabled");
+        setTimeout(initialCheck, 5000);
+
+        const intervalTokenCheck = () =>{
+            console.warn("intervalTokenCheck running");
+            if(document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value.length){
+                let token = document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value;
+                lungTurnstileApi(token, "intervalTokenCheckMethod");
+                clearInterval(intervalId);
+            }
+        }; // end intervalTokenCheck
+
+        const intervalId = setInterval(intervalTokenCheck, 1000);
     });// end DOMContentLoaded
 
-    // run on input
-    document.getElementById("footer-email-signup").addEventListener('input', function() {
+    const inputCheck = () => {
         if(!successfulToken){
             // token not validated or DNE
-            if(this.value.length >= 5 ){ // min length for valid email: a@b.c
+            if(document.getElementById("footer-email-signup").value.length >= 5 ){ // min length for valid email: a@b.c
                 console.warn("oninput: possibly valid email. proceeding.");
                 if(document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]')){
                     console.warn("oninput: turnstile input exists...");
@@ -142,14 +225,18 @@
 
                     if(token.length){ // if the token is loaded
                         console.warn("oninput: token HAS loaded, now calling the API with it");
-                        if(lungTurnstileApi(token)){ // if it returns true, successful token. 
-                            console.warn("oninput: API returened true successfully! now calling finalizeSurvey()");
-                            finalizeSurvey();
-                        } else {
-                            console.warn("oninput: there was a token, but API returned FALSE, failure!");
-                        }
+                        lungTurnstileApi(token, "inputMethod");
+
+                        // THE NEXT IF/ELSE STATEMENT: this does not work, presumably because of the aysnchronous nature of the call. ajax call needs to handle the rest.
+                        // if(lungTurnstileApi(token) == true){ // if it returns true, successful token. 
+                            // console.warn("oninput: API returened true successfully! now calling finalizeSurvey()");
+                            // finalizeSurvey();
+                        // } else {
+                            // console.warn("oninput: there was a token, but API returned FALSE, failure!");
+                        // }
                     } else {
                         console.warn("oninput: turnstile input exists, but no token.");
+                        document.querySelector("#footerEmailErr2").style.display = "block";
                     }
                 } else {
                     console.warn("oninput: no turnstile input yet, turnstile has NOT loaded.");
@@ -163,12 +250,23 @@
         } else {
             console.warn("oninput: successfulToken now is true. end API calls.");
         }
+    };
 
-    }); // end on input
+    // debouncer
+    function debounce(func, delay) {
+        let timeout;
+        return function (...args) {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+
+    document.getElementById("footer-email-signup").addEventListener('input', debounce(inputCheck,500)); // end on-input
 
     // run on submit (is this fast enough?)
     document.getElementById("responsiveSurvey-footer").addEventListener('submit', function(e) {
         e.preventDefault();
+        console.warn("onsubmit: initialized");
         if(!successfulToken){
             // token not validated or DNE
             if(document.getElementById("footer-email-signup").value.length >= 5 ){ // min length for valid email: a@b.c
@@ -180,16 +278,20 @@
 
                     if(token.length){ // if the token is loaded
                         console.warn("onSubmit: token HAS loaded, now calling the API with it");
-                        if(lungTurnstileApi(token)){ // if it returns true, successful token. 
-                            console.warn("onSubmit: API returned SUCCESS! next, calling finalizeSurvey() and then submitting form.");
-                            finalizeSurvey();
-                            document.getElementById("responsiveSurvey-footer").submit();
-                        } else {
-                            console.warn("onSubmit: there was a token, but API returned FALSE, failure!");
-                            e.preventDefault();
-                        }
+                        lungTurnstileApi(token, 'submitMethod');
+
+                        // NO LONGER USING because asynchronous nature was not allowing theorized order. let the ajax call make the rest of the decisions.
+                        // if(lungTurnstileApi(token) == true){ // if it returns true, successful token. 
+                        //     console.warn("onSubmit: API returned SUCCESS! next, calling finalizeSurvey() and then submitting form.");
+                        //     // finalizeSurvey();
+                        //     // document.querySelector("#footerSubmitBtn").click();
+                        // } else {
+                        //     console.warn("onSubmit: there was a token, but API returned FALSE, failure!");
+                        //     e.preventDefault();
+                        // }
                     } else {
                         console.warn("onSubmit: turnstile input exists, but looks like there's no token.");
+                        document.querySelector("#footerEmailErr2").style.display = "block";
                         e.preventDefault();
                     }
                 } else {
@@ -203,6 +305,7 @@
 
         } else {
             console.warn("onSubmit: successfulToken now is true.");
+            document.querySelector("#footerSubmitBtn").click();
         }
     });
 </script>
