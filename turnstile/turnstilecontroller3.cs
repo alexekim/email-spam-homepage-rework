@@ -38,7 +38,7 @@ namespace Launchpad.Api.Controllers
         [Route("api/turnstile/validate-lightbox")]
         public async Task<IHttpActionResult> ValidateLightbox([FromBody] TurnstileRequest model)
         {
-            const string lightboxSecretKey = "0x4BBBBBBBexampleLightboxSecret";
+            const string lightboxSecretKey = "0x4AAAAAABrukDMrSWDMLeDL35d3-f7n2Ho";
             return await ValidateInternal(model, lightboxSecretKey);
         }
 

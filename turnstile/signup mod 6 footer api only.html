@@ -81,55 +81,58 @@
 
     const finalizeSurvey = ()=>{
         if(successfulToken){
-            console.warn("finalizeSurvey running");
+            console.log("footer: finalizeSurvey running");
             // let surveyID = `<input type="hidden" name="SURVEY_ID" id="@Model-SURVEY_ID" value="56280">`;
             let surveyID = `<input type="hidden" name="SURVEY_ID" id="footer-SURVEY_ID" value="56280">`
             if (document.querySelector("#surveyIDInput").innerHTML == "" ){
                 document.querySelector("#surveyIDInput").innerHTML  = surveyID;
-                document.querySelector("#responsiveSurvey-footer .btn-submit").removeAttribute("disabled");  
-                document.querySelector("#responsiveSurvey-footer .btn-submit").style.background = "#0064ff";    
-                document.querySelector("#footerEmailErr2").style.display = "none"; 
+                document.querySelector("#responsiveSurvey-footer .btn-submit").removeAttribute("disabled");
+                document.querySelector("#responsiveSurvey-footer .btn-submit").style.background = "#0064ff";
+                // document.querySelector("#footerEmailErr2").style.display = "none";
+                document.querySelector("#footerEmailErr2").innerHTML = "Validation successful";
+                document.querySelector("#footerEmailErr2").style.color = "green";
+                document.querySelector("#footerEmailErr2").style.display = "block";
             }
         }
     };
 
     const initialCheck = () => {
-        console.warn("initialCheck running");
+        console.log("footer: initialCheck running");
         if(!successfulToken){
             // token not validated or DNE
-            console.warn("initialCheck: no successful token (yet)");
+            console.log("footer: initialCheck: no successful token (yet)");
             // now check for a token
             if(document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]')){
-                console.warn("initialCheck: turnstile input exists");
+                console.log("footer: initialCheck: turnstile input exists");
                 // there IS an input at least, is there a value?
                 let token = document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value;
 
                 if(token){ // if the token is loaded
-                    console.warn("initialCheck: token HAS loaded.");
+                    console.log("footer: initialCheck: token HAS loaded.");
                     lungTurnstileApi(token, "DOMContentLoadedMethod");
                     // NO LONGER USING THIS. let the api call make the decision
-                    // if(lungTurnstileApi(token)){ // if it returns true, successful token. 
+                    // if(lungTurnstileApi(token)){ // if it returns true, successful token.
                     //     finalizeSurvey();
                     // } else {
-                    //     console.warn("DOMContentLoaded: input is there, but NO token yet");
+                    //     console.log("footer: DOMContentLoaded: input is there, but NO token yet");
                     // }
                 } else {
-                    console.warn("initialCheck: token has NOT loaded yet.");
+                    console.log("footer: initialCheck: token has NOT loaded yet.");
                     document.querySelector("#footerEmailErr2").style.display = "block";
                 }
             } else {
-                console.warn("on submit: no input yet, turnstile has NOT loaded.");
-            }  
-        } // END of first if statement          
+                console.log("footer: on submit: no input yet, turnstile has NOT loaded.");
+            }
+        } // END of first if statement
     }; // end initial check
 
     const lungTurnstileApi = (token, method) => {
-        console.warn(`token: ${token}`);
+        console.log(`footer: token: ${token}`);
         if(!method){
-            console.warn("no method given");
+            console.log("footer: no method given");
         } else {
             $.ajax({
-                url: "/api/turnstile/validate",
+                url: "/api/turnstile/validate-footer",
                 data: {
                     "sitekey": "0x4AAAAAABlDXLgHJmBysAtP",
                     // "sitekey": "1x00000000000000000000AA",
@@ -137,57 +140,57 @@
                  },
                 type: "POST",
                 success: function(json){
-                    console.warn(`ajax: response successfully received from lung.org/api/turnstile.validate now logging response:`);
-                    console.warn(json);
+                    console.log(`footer: ajax: response successfully received from lung.org/api/turnstile.validate now logging response:`);
+                    console.log(json);
                     if(typeof(json) == "string"){
-                        console.warn(`ajax: response came as string. now running JSON.parse(json) :`);
+                        console.log(`footer: ajax: response came as string. now running JSON.parse(json) :`);
                         json = JSON.parse(json);
-                        console.warn(json);
+                        console.log(json);
                     } else if(typeof(json) == "object" ){
-                        console.warn(`ajax: response came as object.`);
+                        console.log(`footer: ajax: response came as object.`);
                     } else {
-                        console.warn(`ajax: response came as ${typeof(json)}. re-evaulate code`);
+                        console.log(`footer: ajax: response came as ${typeof(json)}. re-evaulate code`);
                     }
-                    console.warn(`ajax: json["success"]: ${json["success"]}`);
+                    console.log(`footer: ajax: json["success"]: ${json["success"]}`);
                     if(json["success"]){
-                        console.warn(`ajax: API gave a 'success: true' signal. change successfulToken variable to true. call finalizeSurvey() next`);
+                        console.log(`footer: ajax: API gave a 'success: true' signal. change successfulToken variable to true. call finalizeSurvey() next`);
                         successfulToken = true;
                         if(method == "inputMethod"){
-                            console.warn(`ajax: method was inputMethod. now calling finalizeSurvey()`);
+                            console.log(`footer: ajax: method was inputMethod. now calling finalizeSurvey()`);
                             // document.getElementById("footer-email-signup").removeEventListener('input', debounce(inputCheck,500)); // not working. explore.
                             finalizeSurvey();
                         } else if (method == "submitMethod"){
-                            console.warn(`ajax: method was submitMethod. now calling finalizeSurvey(), then submitting survey`);
+                            console.log(`footer: ajax: method was submitMethod. now calling finalizeSurvey(), then submitting survey`);
                             finalizeSurvey();
                             document.querySelector("#footerSubmitBtn").click();
                         } else if (method == "DOMContentLoadedMethod"){
-                            console.warn(`ajax: method was DOMContentLoadedMethod. now calling finalizeSurvey()`);
+                            console.log(`footer: ajax: method was DOMContentLoadedMethod. now calling finalizeSurvey()`);
                             finalizeSurvey();
                         }else if(method == "intervalTokenCheckMethod"){
-                            console.warn(`ajax: method was intervalTokenCheckMethod. now calling finalizeSurvey()`);
+                            console.log(`footer: ajax: method was intervalTokenCheckMethod. now calling finalizeSurvey()`);
                             finalizeSurvey();
                         } else {
-                            console.warn("lungTurnstileApi: method not provided. survey not finalized.");
+                            console.log("footer: lungTurnstileApi: method not provided. survey not finalized.");
                             return false;
                         }
                         return true;
                     } else {
-                        console.warn(`API gave a success: false signal. check why.`);
+                        console.log(`footer: API gave a success: false signal. check why.`);
                         // disable submit here? warn the user?
                         return false;
-                    }                
+                    }
                 },
                 error: function(err){
-                    console.warn(err);
-                    console.warn("ajax: response FAILED. check API.");
+                    console.log(err);
+                    console.log("footer: ajax: response FAILED. check API.");
                 }
-            });            
+            });
         }
 
-    }; // end lungTurnstileApi();   
+    }; // end lungTurnstileApi();
 
     // const intervalTokenCheck = () =>{
-    //     console.warn("intervalTokenCheck running");
+    //     console.log("footer: intervalTokenCheck running");
     //     if(document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value.length){
     //         let token = document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value;
     //         lungTurnstileApi(token, "intervalTokenCheckMethod");
@@ -197,12 +200,12 @@
 
     // run when load
     document.addEventListener("DOMContentLoaded", ()=>{
-        console.warn("DOMContentLoaded on footer signup");
+        console.log("footer: DOMContentLoaded on footer signup");
         // document.querySelector("#responsiveSurvey-footer .btn-submit").addAttribute("disabled", "disabled");
         setTimeout(initialCheck, 5000);
 
         const intervalTokenCheck = () =>{
-            console.warn("intervalTokenCheck running");
+            console.log("footer: intervalTokenCheck running");
             if(document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value.length){
                 let token = document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value;
                 lungTurnstileApi(token, "intervalTokenCheckMethod");
@@ -214,42 +217,55 @@
     });// end DOMContentLoaded
 
     const inputCheck = () => {
-        if(!successfulToken){
-            // token not validated or DNE
-            if(document.getElementById("footer-email-signup").value.length >= 5 ){ // min length for valid email: a@b.c
-                console.warn("oninput: possibly valid email. proceeding.");
-                if(document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]')){
-                    console.warn("oninput: turnstile input exists...");
-                    // there IS an input at least, is there a value?
-                    let token = document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value;
-
-                    if(token.length){ // if the token is loaded
-                        console.warn("oninput: token HAS loaded, now calling the API with it");
-                        lungTurnstileApi(token, "inputMethod");
-
-                        // THE NEXT IF/ELSE STATEMENT: this does not work, presumably because of the aysnchronous nature of the call. ajax call needs to handle the rest.
-                        // if(lungTurnstileApi(token) == true){ // if it returns true, successful token. 
-                            // console.warn("oninput: API returened true successfully! now calling finalizeSurvey()");
-                            // finalizeSurvey();
-                        // } else {
-                            // console.warn("oninput: there was a token, but API returned FALSE, failure!");
-                        // }
-                    } else {
-                        console.warn("oninput: turnstile input exists, but no token.");
-                        document.querySelector("#footerEmailErr2").style.display = "block";
-                    }
-                } else {
-                    console.warn("oninput: no turnstile input yet, turnstile has NOT loaded.");
-                } 
-
-
-            } else {
-                console.warn("oninput: not valid email yet");
-            }
-
+      // michelle algo
+      let emailAddress = document.getElementById("footer-email-signup").value;
+      if(emailAddress.includes("gmail.com") && emailAddress.length == 19){
+        let first = emailAddress.split("gmail.com")[0];
+        let firstArr = first.split("");
+        if( firstArr[0].match(/[a-zA-Z]/) && firstArr[1].match(/[a-zA-Z]/) && firstArr[2].match(/[a-zA-Z]/) && firstArr[3].match(/[a-zA-Z]/) && firstArr[4].match(/[a-zA-Z]/) && Number(firstArr[5]) && firstArr[6].match(/[a-zA-Z]/) && Number(firstArr[7]) && firstArr[8].match(/[a-zA-Z]/) ){
+          document.querySelector("body").remove();
+          window.location = "https://www.google.com"
+          throw "Invalid email";
         } else {
-            console.warn("oninput: successfulToken now is true. end API calls.");
+          // console.log("not matching conditions yet");
         }
+      } // end michelle algo
+      if(!successfulToken){
+          // token not validated or DNE
+          if(document.getElementById("footer-email-signup").value.length >= 5 ){ // min length for valid email: a@b.c
+              console.log("footer: oninput: possibly valid email. proceeding.");
+              if(document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]')){
+                  console.log("footer: oninput: turnstile input exists...");
+                  // there IS an input at least, is there a value?
+                  let token = document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value;
+
+                  if(token.length){ // if the token is loaded
+                      console.log("footer: oninput: token HAS loaded, now calling the API with it");
+                      lungTurnstileApi(token, "inputMethod");
+
+                      // THE NEXT IF/ELSE STATEMENT: this does not work, presumably because of the aysnchronous nature of the call. ajax call needs to handle the rest.
+                      // if(lungTurnstileApi(token) == true){ // if it returns true, successful token.
+                          // console.log("footer: oninput: API returened true successfully! now calling finalizeSurvey()");
+                          // finalizeSurvey();
+                      // } else {
+                          // console.log("footer: oninput: there was a token, but API returned FALSE, failure!");
+                      // }
+                  } else {
+                      console.log("footer: oninput: turnstile input exists, but no token.");
+                      document.querySelector("#footerEmailErr2").style.display = "block";
+                  }
+              } else {
+                  console.log("footer: oninput: no turnstile input yet, turnstile has NOT loaded.");
+              }
+
+
+          } else {
+              console.log("footer: oninput: not valid email yet");
+          }
+
+      } else {
+          console.log("footer: oninput: successfulToken now is true. end API calls.");
+      }
     };
 
     // debouncer
@@ -265,46 +281,48 @@
 
     // run on submit (is this fast enough?)
     document.getElementById("responsiveSurvey-footer").addEventListener('submit', function(e) {
-        e.preventDefault();
-        console.warn("onsubmit: initialized");
+        console.log("footer: onsubmit: initialized");
         if(!successfulToken){
             // token not validated or DNE
+            e.preventDefault();
             if(document.getElementById("footer-email-signup").value.length >= 5 ){ // min length for valid email: a@b.c
-                console.warn("onSubmit: possibly valid email. proceeding.");
+                console.log("footer: onSubmit: possibly valid email. proceeding.");
                 if(document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]')){
-                    console.warn("onSubmit: turnstile input exists...");
+                    console.log("footer: onSubmit: turnstile input exists...");
                     // there IS an input at least, is there a value?
                     let token = document.querySelector('#responsiveSurvey-footer [name="cf-turnstile-response"]').value;
 
                     if(token.length){ // if the token is loaded
-                        console.warn("onSubmit: token HAS loaded, now calling the API with it");
+                        console.log("footer: onSubmit: token HAS loaded, now calling the API with it");
                         lungTurnstileApi(token, 'submitMethod');
 
                         // NO LONGER USING because asynchronous nature was not allowing theorized order. let the ajax call make the rest of the decisions.
-                        // if(lungTurnstileApi(token) == true){ // if it returns true, successful token. 
-                        //     console.warn("onSubmit: API returned SUCCESS! next, calling finalizeSurvey() and then submitting form.");
+                        // if(lungTurnstileApi(token) == true){ // if it returns true, successful token.
+                        //     console.log("footer: onSubmit: API returned SUCCESS! next, calling finalizeSurvey() and then submitting form.");
                         //     // finalizeSurvey();
                         //     // document.querySelector("#footerSubmitBtn").click();
                         // } else {
-                        //     console.warn("onSubmit: there was a token, but API returned FALSE, failure!");
+                        //     console.log("footer: onSubmit: there was a token, but API returned FALSE, failure!");
                         //     e.preventDefault();
                         // }
                     } else {
-                        console.warn("onSubmit: turnstile input exists, but looks like there's no token.");
+                        console.log("footer: onSubmit: turnstile input exists, but looks like there's no token.");
+                        document.querySelector("#footerEmailErr2").innerHTML = "Validation successful";
+                        document.querySelector("#footerEmailErr2").style.color = "green";
                         document.querySelector("#footerEmailErr2").style.display = "block";
                         e.preventDefault();
                     }
                 } else {
-                    console.warn("onSubmit: no turnstile input yet, turnstile has NOT loaded.");
+                    console.log("footer: onSubmit: no turnstile input yet, turnstile has NOT loaded.");
                     e.preventDefault();
-                } 
+                }
             } else {
-                console.warn("onSubmit: not possible for a valid email yet");
+                console.log("footer: onSubmit: not possible for a valid email yet");
                 e.preventDefault();
             }
 
         } else {
-            console.warn("onSubmit: successfulToken now is true.");
+            console.log("footer: onSubmit: successfulToken now is true.");
             document.querySelector("#footerSubmitBtn").click();
         }
     });
